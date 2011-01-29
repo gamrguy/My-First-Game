@@ -57,11 +57,10 @@ class Player
   #    bulleticon = @bulleticon.new
   #    @bulleticon.draw(bullet_position)
   #    bullet_position + 10
-  #   end
-
-  def die
-   @x = 50
-   @y = 50
+  # end
+  
+  def hit_by?(stars)
+    stars.any? {|star| Gosu::distance(@x,@y,star.x,star.y) < 50}
   end
    
 end
