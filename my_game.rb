@@ -2,6 +2,7 @@ require 'rubygems'
 require 'gosu'
 require 'player'
 require 'star'
+require 'background'
 # require 'bullet'
 
 class MyGame < Gosu::Window
@@ -12,10 +13,10 @@ class MyGame < Gosu::Window
     @stars = 3.times.map {Star.new(self)}
     @running = true
     @player2 = Player.new(self, 175, 175, (Gosu::Image.new(self, "images/purple_boo.png", true)) )
-    @bg = Gosu::Image.new(self, "images/bg.png")
     @font = Gosu::Font.new(self, Gosu::default_font_name, 30)
     @score = 0
     @highscore = 0
+    @background = Background.new(self)
   end
   
   def update
@@ -34,6 +35,7 @@ class MyGame < Gosu::Window
      if @player1.hit_by?(@stars) or @player2.hit_by?(@stars)
         stop_game!
       end
+      
       @score += 1
       @highscore = @score unless @score < @highscore
     
@@ -58,9 +60,9 @@ class MyGame < Gosu::Window
     @player1.draw
     @stars.each {|star| star.draw}
     @player2.draw
-    @bg.draw(0,0,-3)
     @font.draw("Score: #{@score}",0,0,0)
     @font.draw("Highscore: #{@highscore}",0,35,0)
+    @background.draw
   end
   
   def stop_game!
